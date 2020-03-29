@@ -29,4 +29,19 @@ function btn_add_work($id_object,$lang,$type,$action){
     $txt_html.='<a  target="_blank" class="buttonPro blue" href="http://work.carrotstore.com/?id_object='.$id_object.'&lang='.$lang.'&type_chat='.$type.'&type_action='.$action.'"><i class="fas fa-plus-square"></i> Thêm vào bàn làm việc</a>';
     return $txt_html;
 }
+
+function does_url_exists($url) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if ($code == 200) {
+        $status = true;
+    } else {
+        $status = false;
+    }
+    curl_close($ch);
+    return $status;
+}
 ?>
