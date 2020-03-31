@@ -11,6 +11,7 @@ if(isset($_GET['sub_view'])){
 <ul style="list-style: none;">
 <li><a class="buttonPro small <?php if($sub_view=='backup'){?>yellow<?php } ?>" href="<?php echo $url;?>?view=tool&sub_view=backup"><i class="fas fa-database"></i> Sao lưu dữ liệu</a></li>
 <li><a class="buttonPro small <?php if($sub_view=='error'){?>yellow<?php } ?>" href="<?php echo $url;?>?view=tool&sub_view=error"><i class="fas fa-bug"></i> Xem lỗi hệ thống</a></li>
+    <li><a class="buttonPro small <?php if($sub_view=='command_mysql'){?>yellow<?php } ?>" href="<?php echo $url;?>?view=tool&sub_view=command_mysql"><i class="fa fa-terminal" aria-hidden="true"></i> Chạy lệnh mysql</a></li>
 </ul>
 
 <?php

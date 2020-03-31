@@ -310,7 +310,7 @@ if($func=='view_contact_edit'){
             $value_item->value = '';
         }
     }
-    
+
     $value_item->key='account_avatar';
     $value_item->tip='account_avatar_tip';
     $value_item->type='3';
@@ -417,9 +417,6 @@ if($func=='update_contact'){
 
     $data_field=json_encode($_POST,JSON_UNESCAPED_UNICODE);
     $data_field=addslashes($data_field);
-    if($id_user!=''){
-        $id_device=$id_user;
-    }
 
     $query_get_user=mysql_query("SELECT `id_device` FROM carrotsy_virtuallover.app_my_girl_user_$lang WHERE `sdt` = '$user_phone' AND `password`='$user_pass' LIMIT 1");
     if(mysql_num_rows($query_get_user)>0){
@@ -442,7 +439,7 @@ if($func=='update_contact'){
         mysql_free_result($query_check_field);
 
     }else{
-        $query_add_user=mysql_query("INSERT INTO carrotsy_virtuallover.app_my_girl_user_$lang (`id_device`, `name`,`sdt`,`status`,`sex`,`date_start`,`date_cur`,`address`,`password`) VALUES ('$id_device', '$account_name', '$phone', '$account_status','$sex',NOW(),NOW(),'$address','$user_pass');");
+        $query_add_user=mysql_query("INSERT INTO carrotsy_virtuallover.app_my_girl_user_$lang (`id_device`, `name`,`sdt`,`status`,`sex`,`date_start`,`date_cur`,`address`,`password`) VALUES ('".$id_device."', '$account_name', '$phone', '$account_status','$sex',NOW(),NOW(),'$address','$user_pass');");
         $error->msg='account_add_success';
         $error->type='1';
         mysql_free_result($query_add_user);
@@ -455,6 +452,7 @@ if($func=='update_contact'){
         mysql_free_result($query_add_field);
     }
 
+    $error->{"account_login"}=array($phone,$user_pass,$id_device,$sex);
     mysql_free_result($query_get_user);
 
     echo json_encode($error);
@@ -525,7 +523,7 @@ if($func=='check_connection'){
 
 if($func=='check_login') {
     $user_phone = $_POST['user_phone'];
-    $query_user_login=mysql_query("SELECT `id_device`,`name`,`password` FROM carrotsy_virtuallover.`app_my_girl_user_$lang` WHERE `sdt`='$user_phone' AND `password`!=''  LIMIT 1");
+    $query_user_login=mysql_query("SELECT `id_device`,`name`,`password`,`sex`,`avatar_url` FROM carrotsy_virtuallover.`app_my_girl_user_$lang` WHERE `sdt`='$user_phone' AND `password`!=''  LIMIT 1");
     if(mysql_num_rows($query_user_login)){
         $data_user_login=mysql_fetch_array($query_user_login);
         $app_contacts->{"status"}="ready_account";
@@ -534,12 +532,16 @@ if($func=='check_login') {
         if(does_url_exists('https://carrotstore.com/app_mygirl/app_my_girl_'.$lang.'_user/'.$data_user_login['id_device'].'.png')) {
             $app_contacts->{"avatar"} = "https://carrotstore.com/img.php?url=app_mygirl/app_my_girl_".$lang."_user/" . $data_user_login['id_device'] . ".png&size=60";
         }else{
-            $app_contacts->{"avatar"}='';
+            if($data_user_login['avatar_url']!=""){
+                $app_contacts->{"avatar"} = $data_user_login['avatar_url'];
+            }else {
+                $app_contacts->{"avatar"} = '';
+            }
         }
-        $app_contacts->{"title"}='account_login';
+        $app_contacts->{"id_device"}=$data_user_login['id_device'];
+        $app_contacts->{"user_sex"}=$data_user_login['sex'];
     }else{
         $app_contacts->{"status"}="no_account";
-        $app_contacts->{"title"}='account_add';
         $app_contacts->list_data=array();
         //Tên
         $value_item=new Item_value();
@@ -603,6 +605,30 @@ if($func=='check_login') {
         $value_item->type='2';
         array_push($app_contacts->list_data,$value_item);
     }
+}
+
+if($func=='backup_contact'){
+    $backup_data=$_POST['backup_data'];
+    $backup_length=$_POST['backup_length'];
+    $title_backup=" (".$backup_length." Contact )  ".date("Y-m-d H:i:s");
+    $query_add_backup=mysql_query("INSERT INTO `backup_contact_$lang` (`id`,`id_user`, `data`, `date`, `comment`) VALUES ('".uniqid().uniqid()."','$id_device', '$backup_data', NOW(), '$title_backup');");
+}
+
+if($func=='list_backup'){
+    $query_list_backup=mysql_query("SELECT * FROM `backup_contact_$lang` WHERE `id_user` = '$id_device'");
+    while ($row_backup=mysql_fetch_array($query_list_backup)){
+        $backup_item=new Item_value();
+        $backup_item->value_data=$row_backup['data'];
+        $backup_item->key=$row_backup['date'];
+        $backup_item->tip=$row_backup['comment'];
+        $backup_item->id=$row_backup['id'];
+        array_push($app_contacts->list_data,$backup_item);
+    }
+}
+
+if($func=='delete_backup'){
+    $id_backup=$_POST['id_backup'];
+    $query_delete_backup=mysql_query("DELETE FROM `backup_contact_$lang` WHERE `id` = '$id_backup'");
 }
 
 echo json_encode($app_contacts);
