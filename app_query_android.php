@@ -561,20 +561,16 @@ if($func=='check_login') {
         $value_item->type='1';
         array_push($app_contacts->list_data,$value_item);
 
-        /*
+
         //Ảnh đại diện
         $value_item=new Item_value();
-        if(does_url_exists("https://carrotstore.com//app_my_girl_".$lang."_user/".$id_device)){
-            $value_item->icon="https://carrotstore.com/img.php?url=app_mygirl/app_my_girl_".$lang."_user/".$id_device.".png&size=80";
-            $value_item->value="https://carrotstore.com/img.php?url=app_mygirl/app_my_girl_".$lang."_user/".$id_device.".png&size=80";
-        }else{
-            $value_item->icon = '';
-            $value_item->value = '';
-                $value_item->key='account_avatar';
+        $value_item->icon = '';
+        $value_item->value = '';
+        $value_item->key='account_avatar';
         $value_item->tip='account_avatar_tip';
         $value_item->type='3';
         array_push($app_contacts->list_data,$value_item);
-        }*/
+
 
         //Địa chỉ - bản đồ
         $value_item=new Item_value();
