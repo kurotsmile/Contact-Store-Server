@@ -33,7 +33,7 @@ while($item_country=mysql_fetch_array($query_list_country)){
     </div>
 
     <ul class="menu_act">
-        <li><a href="<?php echo $url;?>?view=value_lang&lang=<?php echo $key_country;?>"><i class="fas fa-cloud" aria-hidden="true"></i> Hồ sơ sao lưu danh bạ (<b><?php echo $data_count_backup['c']; ?></b>)</a></li>
+        <li><a href="<?php echo $url;?>?view=manager_backup&lang=<?php echo $key_country;?>"><i class="fas fa-cloud" aria-hidden="true"></i> Hồ sơ sao lưu danh bạ (<b><?php echo $data_count_backup['c']; ?></b>)</a></li>
         <li><a href="<?php echo $url;?>?view=value_lang&lang=<?php echo $key_country;?>"><i class="fas fa-flag-checkered"></i> Ngôn ngữ giao diện (<b><?php echo $count_lang_val; ?></b>)</a></li>
         <li><a target="_blank" href="https://play.google.com/store/apps/details?id=com.kurotsmile.contactstore&hl=<?php echo $key_country;?>"><i class="fab fa-android"></i> Xem trên kho ứng dụng Android (chplay)</a></li>
         <li><a target="_blank" href="https://itunes.apple.com/vn/app/id1150792121?l=<?php echo $key_country;?>"><i class="fab fa-apple"></i> Xem trên kho ứng dụng AppleStore</a></li>
