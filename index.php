@@ -46,7 +46,6 @@ if(isset($_SESSION['login'])){
     <li <?php if($view=='home'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=home"><i class="fa fa-home" aria-hidden="true"></i> Tổng quang</a></li>
     <li <?php if($view=='data_user'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=data_user"><i class="fa fa-user" aria-hidden="true"></i> Dữ liệu người dùng</a></li>
     <li <?php if($view=='field'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=field"><i class="fa fa-address-card" aria-hidden="true"></i> Thuộc tính mở rộng</a></li>
-    <li <?php if($view=='company'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=company"><i class="fa fa-building" aria-hidden="true"></i> Công ty</a></li>
     <li <?php if($view=='key_lang'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=key_lang"><i class="fas fa-language"></i> Từ khóa ngôn ngữ</a></li>
     <li <?php if($view=='manager_country'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=manager_country"><i class="fas fa-globe"></i> Quốc gia triển khai</a></li>
     <li <?php if($view=='tool'){?>class="active"<?php }?>><a href="<?php echo $url?>?view=tool"><i class="fas fa-wrench"></i> Công cụ</a></li>
