@@ -23,8 +23,8 @@ if(isset($_POST['username'])){
     $user_pass=$_POST['passsword'];
 }
 
-$query_login=mysql_query("SELECT * FROM  `carrotsy_work`.`work_user` WHERE `user_name` = '$user_name' AND `user_pass` = '$user_pass' LIMIT 1");
-if(mysql_num_rows($query_login)){
+$query_login=mysqli_query($link,"SELECT * FROM  `carrotsy_work`.`work_user` WHERE `user_name` = '$user_name' AND `user_pass` = '$user_pass' LIMIT 1");
+if(mysqli_num_rows($query_login)){
     $_SESSION['login']='1';
 }
 ?>
@@ -53,8 +53,8 @@ if(isset($_SESSION['login'])){
 </ul>
 <ul id="menu_work">
 <?php
-$query_list_app=mysql_query("SELECT * FROM carrotsy_work.`work_app` WHERE `id` != '$app_id'");
-while($item_app=mysql_fetch_array($query_list_app)){
+$query_list_app=mysqli_query($link,"SELECT * FROM carrotsy_work.`work_app` WHERE `id` != '$app_id'");
+while($item_app=mysqli_fetch_assoc($query_list_app)){
 ?>
     <li><a href="<?php echo $item_app['url'] ?>" target="_blank"><img src="<?php echo $url_work;?>/img.php?url=avatar_app/<?php echo $item_app['id'];?>.png&size=18&type=app"  title="<?php echo $item_app['nam']; ?>" /> <span class="name"><?php echo $item_app['name']; ?></span></a></li>
 <?php

@@ -1,20 +1,20 @@
 <?php
-$query_list_country=mysql_query("SELECT * FROM carrotsy_virtuallover.`app_my_girl_country`");
-while($item_country=mysql_fetch_array($query_list_country)){
+$query_list_country=mysqli_query($link,"SELECT * FROM carrot.`app_my_girl_country`");
+while($item_country=mysqli_fetch_array($query_list_country)){
     $key_country=$item_country['key'];
     
     $is_sel='off';
-    $query_check_sel=mysql_query("SELECT `key` FROM `country` WHERE `key` = '$key_country' LIMIT 1");
-    if(mysql_num_rows($query_check_sel)>0){
+    $query_check_sel=mysqli_query($link,"SELECT `key` FROM `country` WHERE `key` = '$key_country' LIMIT 1");
+    if(mysqli_num_rows($query_check_sel)>0){
         $is_sel='on';
     }else{
         $is_sel='off';
     }
     
     $count_lang_val=0;
-    $query_count_lang_val=mysql_query("SELECT * FROM `lang_value` WHERE `id_country` = '$key_country' LIMIT 1");
-    if(mysql_num_rows($query_count_lang_val)>0){
-        $data_lang_val=mysql_fetch_array($query_count_lang_val);
+    $query_count_lang_val=mysqli_query($link,"SELECT * FROM `lang_value` WHERE `id_country` = '$key_country' LIMIT 1");
+    if(mysqli_num_rows($query_count_lang_val)>0){
+        $data_lang_val=mysqli_fetch_array($query_count_lang_val);
         if($data_lang_val['value']!=''){
             $arr_lang_val=json_decode($data_lang_val['value']);
             $arr_lang_val=(array)$arr_lang_val;
@@ -22,8 +22,8 @@ while($item_country=mysql_fetch_array($query_list_country)){
         }
     }
 
-    $query_count_backup=mysql_query("SELECT COUNT(`id`) as c FROM `backup_contact_$key_country`");
-    $data_count_backup=mysql_fetch_array($query_count_backup);
+    $query_count_backup=mysqli_query($link,"SELECT COUNT(`id`) as c FROM `backup_contact_$key_country`");
+    $data_count_backup=mysqli_fetch_assoc($query_count_backup);
                 
     ?>
     <div class="box_lang <?php if($is_sel=='on'){ echo 'active';} ?>">
